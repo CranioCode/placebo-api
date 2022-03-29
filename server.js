@@ -8,12 +8,19 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import mongoose from "mongoose";
+import passport from "passport";
+import cookieSession from "cookie-session";
+
+import authRouter from "./routes/auth.js";
 
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 
 import { socket } from "./socketio/connection.js";
 import checkSocket from "./middlewares/socket.js";
+
+import { initializePassport } from "./utils/passport.js";
+initializePassport();
 
 const app = express();
 const httpServer = createServer(app);
@@ -34,9 +41,19 @@ app
     fileUpload({
       limits: 10 * 1024 * 1024, //10MB
     })
-  );
+  )
+  .use(
+    cookieSession({
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      keys: [process.env.SECRET],
+    })
+  )
+  .use(passport.initialize())
+  .use(passport.session());
 
 //-----------------ROUTERS--------------------------
+
+app.use("/api/v1/auth", authRouter);
 
 //-----------------SOCKET IO------------------------
 

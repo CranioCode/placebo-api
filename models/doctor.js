@@ -1,12 +1,16 @@
 import mongoose from "mongoose";
 
 const doctorSchema = new mongoose.Schema({
-  name: String,
-  email: String,
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
   dob: Number,
-  rating: String,
+  rating: {
+    total: Number,
+    users: Number,
+  },
   patients: [mongoose.Schema.Types.ObjectId],
-  charge: Number,
+  charge: Number, // Base Charge Per Appointment
   specializations: [String],
   qualifications: [String],
   highlights: [String],
@@ -20,11 +24,12 @@ const doctorSchema = new mongoose.Schema({
     default: "AVAILABLE",
   },
   profilePic: String,
-  signature: String,
   address: String,
   phoneNumber: Number,
-  doctorVerified: Boolean,
-  verified: Boolean,
+  verified: {
+    type: Boolean,
+    default: false,
+  },
   otp: {
     value: String,
     expiry: Number,
