@@ -31,7 +31,11 @@ const io = new Server(httpServer, {
 });
 
 app
-  .use(cors())
+  .use(
+    cors({
+      origin: "*",
+    })
+  )
   .use(helmet())
   .use(morgan("dev"))
   .use(express.json())
