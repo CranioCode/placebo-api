@@ -13,6 +13,8 @@ const doctorSchema = new mongoose.Schema({
   charge: Number, // Base Charge Per Appointment
   specializations: [String],
   qualifications: [String],
+  registrationNumber: String,
+  dateOfRegistration: Number,
   highlights: [String],
   testimonials: [mongoose.Schema.Types.ObjectId],
   description: String,
