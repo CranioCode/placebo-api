@@ -11,7 +11,7 @@ const medicineSchema = new mongoose.Schema({
       time: Number,
     },
   },
-  usage: String, // Medicine Used For
+  usage: [String], // Medicine Used For
   sideEffects: [String],
 });
 
