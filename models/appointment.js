@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const appointmentSchema = new mongoose.Schema({
-  completed: Boolean,
+  completed: {
+    type: Boolean,
+    default: false,
+  },
   start: Number,
   end: Number,
   doctor: mongoose.Schema.Types.ObjectId,
