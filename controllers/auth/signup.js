@@ -11,7 +11,7 @@ import { generateOtp } from "../../utils/otp.js";
  */
 async function signUp(req, res) {
   try {
-    const { email, name, password, dob, phoneNumber, address } = req.body;
+    const { email, name, password, dob } = req.body;
 
     const { type } = req.params;
 
@@ -19,14 +19,7 @@ async function signUp(req, res) {
     const pfpUrl = `https://avatars.dicebear.com/api/identicon/${name}.svg`;
 
     if (type === "doctor") {
-      const {
-        charge,
-        specializations,
-        qualifications,
-        highlights,
-        description,
-        yearOfStartingCareer,
-      } = req.body;
+      const { regNo, dor } = req.body;
 
       const findDoctor = await Doctor.findOne({
         email,
@@ -44,15 +37,9 @@ async function signUp(req, res) {
         email,
         password: await bcrypt.hash(password, salt),
         dob,
-        charge,
-        specializations,
-        qualifications,
-        highlights,
-        description,
-        yearOfStartingCareer,
-        phoneNumber,
+        dateOfRegistration: dor,
+        registrationNumber: regNo,
         profilePic: pfpUrl,
-        address,
         otp: generateOtp(req),
       });
 
@@ -75,8 +62,6 @@ async function signUp(req, res) {
         password: await bcrypt.hash(password, salt),
         dob,
         medicalHistory: [],
-        phoneNumber,
-        address,
         appointments: [],
         testimonials: [],
         otp: generateOtp(req),

@@ -8,7 +8,11 @@ const router = express.Router({ mergeParams: true });
 router.use("/otp/:type", otpRouter);
 
 // :type -> user, doctor
-router.post("/login/:type", passport.authenticate("local"), login);
+router.post(
+  "/login/:type",
+  passport.authenticate("local", { failWithError: true }),
+  login
+);
 router.post("/signup/:type", signUp);
 router.post("/logout", logout);
 router.get("/", getUser);
