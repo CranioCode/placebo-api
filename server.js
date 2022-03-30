@@ -12,6 +12,7 @@ import passport from "passport";
 import cookieSession from "cookie-session";
 
 import authRouter from "./routes/auth.js";
+import conversationRouter from "./routes/conversation.js"
 
 import { createServer } from "node:http";
 import { Server } from "socket.io";
@@ -58,6 +59,7 @@ app
 //-----------------ROUTERS--------------------------
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/conversation", conversationRouter);
 
 //-----------------SOCKET IO------------------------
 
