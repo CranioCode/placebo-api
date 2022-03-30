@@ -35,7 +35,8 @@ const io = new Server(httpServer, {
 app
   .use(
     cors({
-      origin: "*",
+      origin: "http://localhost:3000",
+      credentials: true,
     })
   )
   .use(helmet())
