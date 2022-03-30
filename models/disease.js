@@ -6,6 +6,7 @@ const diseaseSchema = new mongoose.Schema({
   severityIndex: Number,
   description: String,
   solutions: [String],
+  warning: String,
 });
 
 const Disease = mongoose.model("disease", diseaseSchema);

@@ -12,6 +12,8 @@ import passport from "passport";
 import cookieSession from "cookie-session";
 
 import authRouter from "./routes/auth.js";
+import doctorRouter from "./routes/doctor.js";
+import userRouter from "./routes/user.js";
 
 import { createServer } from "node:http";
 import { Server } from "socket.io";
@@ -58,6 +60,10 @@ app
 //-----------------ROUTERS--------------------------
 
 app.use("/api/v1/auth", authRouter);
+
+// TODO: Add authentication check
+app.use("/api/v1/doctor", doctorRouter);
+app.use("/api/v1/user", userRouter);
 
 //-----------------SOCKET IO------------------------
 
