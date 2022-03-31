@@ -8,7 +8,7 @@ import Doctor from "../../models/doctor.js";
 
 async function getDoctorById(req, res) {
   try {
-    const { id } = req.body;
+    const id = req?.params?.id;
 
     const doctor = await Doctor.findById(id);
 

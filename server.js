@@ -15,6 +15,7 @@ import authRouter from "./routes/auth.js";
 import conversationRouter from "./routes/conversation.js"
 import doctorRouter from "./routes/doctor.js";
 import userRouter from "./routes/user.js";
+import messageRouter from "./routes/message.js";
 
 import { createServer } from "node:http";
 import { Server } from "socket.io";
@@ -29,9 +30,15 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+      origin: "http://localhost:3000",
+      credentials: true,
   },
 });
+
+const sessionMiddleware = cookieSession({
+  maxAge: 1000 * 60 * 60 * 24 * 30,
+  keys: [process.env.SECRET],
+})
 
 app
   .use(
@@ -51,10 +58,7 @@ app
     })
   )
   .use(
-    cookieSession({
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-      keys: [process.env.SECRET],
-    })
+    sessionMiddleware
   )
   .use(passport.initialize())
   .use(passport.session());
@@ -63,12 +67,19 @@ app
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/conversation", conversationRouter);
+app.use("/api/v1/message", messageRouter);
 
 // TODO: Add authentication check
 app.use("/api/v1/doctor", doctorRouter);
 app.use("/api/v1/user", userRouter);
 
 //-----------------SOCKET IO------------------------
+
+const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+
+io.use(wrap(sessionMiddleware));
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.session()));
 
 io.use(checkSocket);
 socket(io); // Socket Connection

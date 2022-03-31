@@ -5,8 +5,7 @@ const arrayLim = (val) => {
 
 const conversationSchema = new mongoose.Schema({
   members: {
-    // type: [mongoose.Schema.Types.ObjectId],
-    type: [String],
+    type: [mongoose.Schema.Types.ObjectId],
     validate: [arrayLim,"only two members allowed"],
   }
 }, {timestamps: true});
