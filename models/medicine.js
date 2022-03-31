@@ -6,10 +6,8 @@ const medicineSchema = new mongoose.Schema({
     required: true,
   },
   dosageLimit: {
-    type: {
-      number: Number,
-      time: Number,
-    },
+    number: Number,
+    time: Number,
   },
   usage: [String], // Medicine Used For
   sideEffects: [String],
