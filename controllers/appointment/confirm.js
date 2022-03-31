@@ -8,12 +8,19 @@ import Appointment from "../../models/appointment.js";
 async function confirmAppointment(req, res) {
   try {
     const { id } = req.params;
-    const { confirmationSatatus } = req.body;
+    const { confirmationStatus } = req.body;
     // confirmationStatus == 1, -1 (1 for OK, -1 for ignore)
 
     const appointment = await Appointment.findById(id);
 
-    if (req.user._id !== appointment.doctor) {
+    if (!appointment) {
+      return res.json({
+        success: false,
+        error: "Appointment not found.",
+      });
+    }
+
+    if (!req.user._id.equals(appointment.doctor)) {
       return res.json({
         success: false,
         error: "Unauthorized access.",
@@ -27,7 +34,7 @@ async function confirmAppointment(req, res) {
       });
     }
 
-    appointment.verified = confirmationSatatus;
+    appointment.verified = confirmationStatus;
     await appointment.save();
 
     res.json({

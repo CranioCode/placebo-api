@@ -38,7 +38,7 @@ async function newAppointment(req, res) {
       ) {
         return res.json({
           success: false,
-          error: "Time interval is taken. ",
+          error: "Time interval is taken.",
         });
       }
     }
@@ -58,6 +58,7 @@ async function newAppointment(req, res) {
     await existingPatient.save();
 
     const doctorFromDB = await Doctor.findById(doctor);
+    doctorFromDB.appointments.push(savedAppointment._id);
     doctorFromDB.patients.push(existingPatient._id);
     await doctorFromDB.save();
 
@@ -69,7 +70,7 @@ async function newAppointment(req, res) {
     console.log(err);
     res.json({
       success: false,
-      error: "New Server Error.",
+      error: "Internal Server Error.",
     });
   }
 }

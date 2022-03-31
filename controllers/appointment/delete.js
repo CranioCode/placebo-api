@@ -20,8 +20,8 @@ async function deleteAppointmentById(req, res) {
     }
 
     if (
-      req.user._id !== appointment.doctor &&
-      req.user._id !== appointment.patient
+      !req.user._id.equals(appointment.doctor) &&
+      !req.user._id.equals(appointment.patient)
     ) {
       return res.json({
         success: false,
@@ -33,14 +33,16 @@ async function deleteAppointmentById(req, res) {
     const doctor = await Doctor.findById(appointment.doctor);
 
     user.appointments = user.appointments.filter(
-      (appointment) => appointment !== id
+      (appointment) => !appointment.equals(id)
     );
     await user.save();
 
     doctor.appointments = doctor.appointments.filter(
-      (appointment) => appointment !== id
+      (appointment) => !appointment.equals(id)
     );
-    doctor.patients = doctor.patients.filter((patient) => patient !== user._id);
+    doctor.patients = doctor.patients.filter((patient) =>
+      patient.equals(user._id)
+    );
     await doctor.save();
 
     await Appointment.findByIdAndDelete(id);

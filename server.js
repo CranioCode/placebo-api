@@ -20,6 +20,7 @@ import testimonialRouter from "./routes/testimonial.js";
 import specialityRouter from "./routes/specialities.js";
 import medicineRouter from "./routes/medicine.js";
 import appointmentRouter from "./routes/appointment.js";
+import diseaseRouter from "./routes/diseases.js";
 
 import { createServer } from "node:http";
 import { Server } from "socket.io";
@@ -29,6 +30,9 @@ import checkSocket from "./middlewares/socket.js";
 
 import { initializePassport } from "./utils/passport.js";
 initializePassport();
+
+import { setBucket } from "./config/storage.js";
+setBucket();
 
 const app = express();
 const httpServer = createServer(app);
@@ -75,14 +79,13 @@ app.get("/api/v1/hi", (req, res) => {
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/conversation", conversationRouter);
 app.use("/api/v1/message", messageRouter);
-
-// TODO: Add authentication check
 app.use("/api/v1/doctor", doctorRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/testimonial", testimonialRouter);
 app.use("/api/v1/speciality", specialityRouter);
 app.use("/api/v1/medicine", medicineRouter);
 app.use("/api/v1/appointment", appointmentRouter);
+app.use("/api/v1/disease", diseaseRouter);
 
 //-----------------SOCKET IO------------------------
 

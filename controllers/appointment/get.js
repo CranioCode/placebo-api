@@ -11,6 +11,13 @@ async function getAppointmentById(req, res) {
 
     const appointment = await Appointment.findById(id);
 
+    if (!appointment) {
+      return res.json({
+        success: false,
+        error: "Appointment not found.",
+      });
+    }
+
     res.json({
       success: true,
       message: appointment,
