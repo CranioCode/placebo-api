@@ -9,6 +9,7 @@ const appointmentSchema = new mongoose.Schema({
   end: Number,
   doctor: mongoose.Schema.Types.ObjectId,
   patient: mongoose.Schema.Types.ObjectId,
+  reason: String,
   verified: {
     type: Number,
     default: 0,

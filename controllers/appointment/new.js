@@ -9,7 +9,18 @@ import Doctor from "../../models/doctor.js";
  */
 async function newAppointment(req, res) {
   try {
-    const { doctor, patient, start, end } = req.body;
+    const { doctor, email, start, end, reason } = req.body;
+
+    const existingPatient = await User.findOne({ email });
+
+    if (!existingPatient) {
+      return res.json({
+        success: false,
+        error: "Patient with the email doesn't exist",
+      });
+    }
+
+    const patient = existingPatient._id;
 
     const existingAppointments = await Appointment.find({
       doctor,
@@ -37,16 +48,17 @@ async function newAppointment(req, res) {
       end,
       patient,
       doctor,
+      reason,
     });
 
     const savedAppointment = await appointment.save();
 
-    const user = await User.findById(patient);
-    user.appointments.push(savedAppointment._id);
-    await user.save();
+    // const user = await User.findById(patient);
+    existingPatient.appointments.push(savedAppointment._id);
+    await existingPatient.save();
 
     const doctorFromDB = await Doctor.findById(doctor);
-    doctorFromDB.patients.push(user._id);
+    doctorFromDB.patients.push(existingPatient._id);
     await doctorFromDB.save();
 
     res.json({
