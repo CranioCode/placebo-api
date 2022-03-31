@@ -16,6 +16,10 @@ import conversationRouter from "./routes/conversation.js"
 import doctorRouter from "./routes/doctor.js";
 import userRouter from "./routes/user.js";
 import messageRouter from "./routes/message.js";
+import testimonialRouter from "./routes/testimonial.js";
+import specialityRouter from "./routes/specialities.js";
+import medicineRouter from "./routes/medicine.js";
+import appointmentRouter from "./routes/appointment.js";
 
 import { createServer } from "node:http";
 import { Server } from "socket.io";
@@ -65,6 +69,11 @@ app
 
 //-----------------ROUTERS--------------------------
 
+app.get("/api/v1/hi", (req, res) => {
+  console.log(req.user);
+  res.send("Hi");
+});
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/conversation", conversationRouter);
 app.use("/api/v1/message", messageRouter);
@@ -72,6 +81,10 @@ app.use("/api/v1/message", messageRouter);
 // TODO: Add authentication check
 app.use("/api/v1/doctor", doctorRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/testimonial", testimonialRouter);
+app.use("/api/v1/speciality", specialityRouter);
+app.use("/api/v1/medicine", medicineRouter);
+app.use("/api/v1/appointment", appointmentRouter);
 
 //-----------------SOCKET IO------------------------
 

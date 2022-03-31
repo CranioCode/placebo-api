@@ -41,7 +41,6 @@ async function signUp(req, res) {
         registrationNumber: regNo,
         profilePic: pfpUrl,
         otp: generateOtp(req),
-        role: "doctor",
       });
 
       await newDoctor.save();
@@ -62,11 +61,11 @@ async function signUp(req, res) {
         email,
         password: await bcrypt.hash(password, salt),
         dob,
+        profilePic: pfpUrl,
         medicalHistory: [],
         appointments: [],
         testimonials: [],
         otp: generateOtp(req),
-        role: "user",
       });
 
       await newUser.save();

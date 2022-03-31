@@ -1,6 +1,7 @@
 import express from "express";
 import passport from "passport";
 import { login, getUser, signUp, logout } from "../controllers/auth/index.js";
+import { authenticated } from "../middlewares/auth.js";
 import otpRouter from "./otp.js";
 
 const router = express.Router({ mergeParams: true });
@@ -14,7 +15,7 @@ router.post(
   login
 );
 router.post("/signup/:type", signUp);
-router.post("/logout", logout);
-router.get("/", getUser);
+router.post("/logout", authenticated, logout);
+router.get("/", authenticated, getUser);
 
 export default router;

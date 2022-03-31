@@ -17,4 +17,15 @@ async function authenticated(req, res, next) {
   }
 }
 
-export { authenticated };
+async function authenticatedDoctor(req, res, next) {
+  if (req.isAuthenticated() && req.user.role === "DOCTOR") {
+    next();
+  } else {
+    return res.json({
+      success: false,
+      error: "User unauthenticated.",
+    });
+  }
+}
+
+export { authenticated, authenticatedDoctor };

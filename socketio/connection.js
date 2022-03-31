@@ -7,6 +7,7 @@ let users = {};
 
 const socket = (io) => {
   io.on("connection", (socket) => {
+    console.log(socket.request.user);
     const uid = socket?.request?.user._id;
     users[uid] = socket.id;
     socket.on("sendMessage", (message) => {

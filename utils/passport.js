@@ -52,7 +52,7 @@ function initializePassport() {
         // Successful Login
         return done(null, {
           user,
-          role: type === "doctor" ? "DOCTOR" : "USER",
+          role: type,
         });
       }
     )
@@ -82,8 +82,10 @@ function initializePassport() {
         });
       }
 
-      user.role = data.role;
-      done(null, user);
+      done(null, {
+        role: data.role,
+        ...user._doc,
+      });
     } catch (err) {
       console.log(err);
       done("User Not Found", false);
