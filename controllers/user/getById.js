@@ -8,7 +8,7 @@ import User from "../../models/user.js";
 
 async function getUser(req, res) {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
 
     const user = await User.findById(id);
 
