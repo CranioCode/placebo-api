@@ -52,7 +52,7 @@ function initializePassport() {
         // Successful Login
         return done(null, {
           user,
-          role: type === "doctor" ? "DOCTOR" : "USER",
+          role: type,
         });
       }
     )
