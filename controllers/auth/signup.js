@@ -61,6 +61,7 @@ async function signUp(req, res) {
         email,
         password: await bcrypt.hash(password, salt),
         dob,
+        profilePic: pfpUrl,
         medicalHistory: [],
         appointments: [],
         testimonials: [],
