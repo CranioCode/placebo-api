@@ -82,7 +82,10 @@ function initializePassport() {
         });
       }
 
-      done(null, { user, role: data.role });
+      done(null, {
+        role: data.role,
+        ...user._doc,
+      });
     } catch (err) {
       console.log(err);
       done("User Not Found", false);
