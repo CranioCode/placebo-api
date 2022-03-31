@@ -12,7 +12,7 @@ import passport from "passport";
 import cookieSession from "cookie-session";
 
 import authRouter from "./routes/auth.js";
-import conversationRouter from "./routes/conversation.js"
+import conversationRouter from "./routes/conversation.js";
 import doctorRouter from "./routes/doctor.js";
 import userRouter from "./routes/user.js";
 import messageRouter from "./routes/message.js";
@@ -34,15 +34,15 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-      origin: "http://localhost:3000",
-      credentials: true,
+    origin: "http://localhost:3000",
+    credentials: true,
   },
 });
 
 const sessionMiddleware = cookieSession({
   maxAge: 1000 * 60 * 60 * 24 * 30,
   keys: [process.env.SECRET],
-})
+});
 
 app
   .use(
@@ -61,9 +61,7 @@ app
       limits: 10 * 1024 * 1024, //10MB
     })
   )
-  .use(
-    sessionMiddleware
-  )
+  .use(sessionMiddleware)
   .use(passport.initialize())
   .use(passport.session());
 
@@ -88,7 +86,8 @@ app.use("/api/v1/appointment", appointmentRouter);
 
 //-----------------SOCKET IO------------------------
 
-const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+const wrap = (middleware) => (socket, next) =>
+  middleware(socket.request, {}, next);
 
 io.use(wrap(sessionMiddleware));
 io.use(wrap(passport.initialize()));
