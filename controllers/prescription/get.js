@@ -1,4 +1,5 @@
 import Prescription from "../../models/prescription.js";
+import User from "../../models/user.js";
 
 /**
  *
@@ -39,6 +40,14 @@ async function getPrescriptionById(req, res) {
 async function getPrescriptionByUser(req, res) {
   try {
     const { id } = req.params;
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.json({
+        success: false,
+        error: "User not found.",
+      });
+    }
 
     const prescriptions = await Prescription.find({
       patient: id,

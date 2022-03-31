@@ -1,4 +1,6 @@
 import Appointment from "../../models/appointment.js";
+import User from "../../models/user.js";
+import Doctor from "../../models/doctor.js";
 
 /**
  *
@@ -37,7 +39,15 @@ async function newAppointment(req, res) {
       doctor,
     });
 
-    await appointment.save();
+    const savedAppointment = await appointment.save();
+
+    const user = await User.findById(patient);
+    user.appointments.push(savedAppointment._id);
+    await user.save();
+
+    const doctorFromDB = await Doctor.findById(doctor);
+    doctorFromDB.patients.push(user._id);
+    await doctorFromDB.save();
 
     res.json({
       success: true,

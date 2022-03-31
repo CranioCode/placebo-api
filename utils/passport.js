@@ -72,7 +72,7 @@ function initializePassport() {
     try {
       let user;
 
-      if (data.role === "USER") {
+      if (data.role === "user") {
         user = await User.findOne({
           email: data.email,
         });
