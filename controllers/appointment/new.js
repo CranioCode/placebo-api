@@ -1,7 +1,6 @@
 import Appointment from "../../models/appointment.js";
 import User from "../../models/user.js";
 import Doctor from "../../models/doctor.js";
-import mongoose from "mongoose";
 
 /**
  *
@@ -43,11 +42,12 @@ async function newAppointment(req, res) {
     const savedAppointment = await appointment.save();
 
     const user = await User.findById(patient);
-    user.appointments.push(mongoose.Types.ObjectId(savedAppointment._id));
+    user.appointments.push(savedAppointment._id);
     await user.save();
 
     const doctorFromDB = await Doctor.findById(doctor);
-    doctorFromDB.patients.push(mongoose.Types.ObjectId(user._id));
+    doctorFromDB.appointments.push(savedAppointment._id);
+    doctorFromDB.patients.push(user._id);
     await doctorFromDB.save();
 
     res.json({
