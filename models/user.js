@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     value: String,
     expiry: Number,
   },
-  role: {String},
+  role: String,
 });
 
 const User = mongoose.model("user", userSchema);

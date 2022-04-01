@@ -37,7 +37,7 @@ const doctorSchema = new mongoose.Schema({
     expiry: Number,
   },
 
-  role: {String},
+  role: String,
 });
 
 const Doctor = mongoose.model("doctor", doctorSchema);
