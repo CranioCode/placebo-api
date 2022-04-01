@@ -12,7 +12,7 @@ import passport from "passport";
 import cookieSession from "cookie-session";
 
 import authRouter from "./routes/auth.js";
-import conversationRouter from "./routes/conversation.js"
+import conversationRouter from "./routes/conversation.js";
 import doctorRouter from "./routes/doctor.js";
 import userRouter from "./routes/user.js";
 import messageRouter from "./routes/message.js";
@@ -86,7 +86,8 @@ app.use("/api/v1/disease", diseaseRouter);
 
 //-----------------SOCKET IO------------------------
 
-const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+const wrap = (middleware) => (socket, next) =>
+  middleware(socket.request, {}, next);
 
 io.use(wrap(sessionMiddleware));
 io.use(wrap(passport.initialize()));
