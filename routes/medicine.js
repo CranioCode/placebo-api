@@ -9,7 +9,7 @@ import { authenticatedDoctor } from "../middlewares/auth.js";
 const router = express.Router();
 
 router.post("/new", authenticatedDoctor, newMedicine);
-router.get("/:id", getMedicineById);
 router.get("/search", getMedicineByName);
+router.get("/:id", getMedicineById);
 
 export default router;

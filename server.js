@@ -31,6 +31,9 @@ import checkSocket from "./middlewares/socket.js";
 import { initializePassport } from "./utils/passport.js";
 initializePassport();
 
+import { setBucket } from "./config/storage.js";
+setBucket();
+
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
