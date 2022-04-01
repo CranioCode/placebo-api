@@ -15,6 +15,7 @@ async function updateDoctor(req, res) {
       description,
       address,
       phoneNumber,
+      profilePic,
     } = req.body;
 
     const doctor = await Doctor.findById(req.user._id);
@@ -33,6 +34,7 @@ async function updateDoctor(req, res) {
     doctor.description = description || doctor.description;
     doctor.address = address || doctor.address;
     doctor.phoneNumber = phoneNumber || doctor.phoneNumber;
+    doctor.profilePic = profilePic || doctor.profilePic;
 
     await doctor.save();
 

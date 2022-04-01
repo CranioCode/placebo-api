@@ -7,12 +7,13 @@ import User from "../../models/user.js";
  */
 async function updateUser(req, res) {
   try {
-    const { phoneNumber, address } = req.body;
+    const { phoneNumber, address, profilePic } = req.body;
 
     const user = await User.findById(req.user._id);
 
     user.phoneNumber = phoneNumber || user.phoneNumber;
     user.address = address || user.address;
+    user.profilePic = profilePic || user.profilePic;
 
     await user.save();
 
