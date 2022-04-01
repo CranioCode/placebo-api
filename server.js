@@ -20,6 +20,7 @@ import testimonialRouter from "./routes/testimonial.js";
 import specialityRouter from "./routes/specialities.js";
 import medicineRouter from "./routes/medicine.js";
 import appointmentRouter from "./routes/appointment.js";
+import diseaseRouter from "./routes/diseases.js";
 
 import { createServer } from "node:http";
 import { Server } from "socket.io";
@@ -34,15 +35,15 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-      origin: "http://localhost:3000",
-      credentials: true,
+    origin: "http://localhost:3000",
+    credentials: true,
   },
 });
 
 const sessionMiddleware = cookieSession({
   maxAge: 1000 * 60 * 60 * 24 * 30,
   keys: [process.env.SECRET],
-})
+});
 
 app
   .use(
@@ -61,9 +62,7 @@ app
       limits: 10 * 1024 * 1024, //10MB
     })
   )
-  .use(
-    sessionMiddleware
-  )
+  .use(sessionMiddleware)
   .use(passport.initialize())
   .use(passport.session());
 
@@ -77,14 +76,13 @@ app.get("/api/v1/hi", (req, res) => {
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/conversation", conversationRouter);
 app.use("/api/v1/message", messageRouter);
-
-// TODO: Add authentication check
 app.use("/api/v1/doctor", doctorRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/testimonial", testimonialRouter);
 app.use("/api/v1/speciality", specialityRouter);
 app.use("/api/v1/medicine", medicineRouter);
 app.use("/api/v1/appointment", appointmentRouter);
+app.use("/api/v1/disease", diseaseRouter);
 
 //-----------------SOCKET IO------------------------
 

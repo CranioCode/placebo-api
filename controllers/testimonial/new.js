@@ -9,14 +9,15 @@ import User from "../../models/user.js";
  */
 async function newTestimonial(req, res) {
   try {
-    const { body, doctorId } = req.body;
+    const { body } = req.body;
+    const { doctorId } = req.params;
 
     const doctor = await Doctor.findById(doctorId);
 
     if (!doctor) {
       return res.json({
         success: false,
-        error: "Doctor does not exists.",
+        error: "Doctor doesn't exist.",
       });
     }
 
@@ -27,7 +28,7 @@ async function newTestimonial(req, res) {
       doctor: doctorId,
     });
 
-    if (!testimonialExists) {
+    if (testimonialExists) {
       return res.json({
         success: false,
         error: "Testimonial already exists",

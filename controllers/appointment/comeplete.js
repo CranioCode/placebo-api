@@ -11,10 +11,24 @@ async function completedAppointment(req, res) {
 
     const appointment = await Appointment.findById(id);
 
-    if (req.user._id !== appointment.doctor) {
+    if (!req.user._id.equals(appointment.doctor)) {
       return res.json({
         success: false,
         error: "Unauthorized access.",
+      });
+    }
+
+    if (appointment.verified === 0) {
+      return res.json({
+        success: false,
+        error: "Please verify the appointment.",
+      });
+    }
+
+    if (appointment.verified === -1) {
+      return res.json({
+        success: false,
+        error: "Appointment was rejected.",
       });
     }
 

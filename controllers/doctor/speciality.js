@@ -8,7 +8,7 @@ import Doctor from "../../models/doctor.js";
 async function getSpeciality(req, res) {
   try {
     const doctors = await Doctor.find({
-      specializations: req.query.speciality,
+      specializations: req.query.name,
     });
 
     return res.json({

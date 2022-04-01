@@ -9,7 +9,14 @@ async function getTestimonial(req, res) {
   try {
     const { id } = req.params;
 
-    const testimonial = Testimonial.findById(id);
+    const testimonial = await Testimonial.findById(id);
+
+    if (!testimonial) {
+      return res.json({
+        success: false,
+        error: "Testimonial doesn't exist4",
+      });
+    }
 
     return res.json({
       success: true,
