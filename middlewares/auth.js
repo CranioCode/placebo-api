@@ -18,7 +18,7 @@ async function authenticated(req, res, next) {
 }
 
 async function authenticatedDoctor(req, res, next) {
-  if (req.isAuthenticated() && req.user.role === "DOCTOR") {
+  if (req.isAuthenticated() && req.user.role === "doctor") {
     next();
   } else {
     return res.json({

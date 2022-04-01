@@ -1,4 +1,5 @@
 import Prescription from "../../models/prescription.js";
+import User from "../../models/user.js";
 
 /**
  *
@@ -16,7 +17,12 @@ async function newPrescription(req, res) {
       remarks,
     });
 
-    await prescription.save();
+    const user = await User.findById(patient);
+
+    const savedPrescription = await prescription.save();
+
+    user.medicalHistory.push(savedPrescription._id);
+    await user.save();
 
     res.json({
       success: true,

@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.use("/new", authenticatedDoctor, newPrescription);
 router.get("/:id", getPrescriptionById);
-router.get("/user/:id", getPrescriptionByUser);
+router.get("/user/:id", authenticatedDoctor, getPrescriptionByUser);
 router.delete("/:id", authenticatedDoctor, deletePrescription);
 
 export default router;

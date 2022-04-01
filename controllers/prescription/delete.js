@@ -1,4 +1,5 @@
 import Prescription from "../../models/prescription.js";
+import User from "../../models/user.js";
 
 /**
  *
@@ -24,6 +25,12 @@ async function deletePrescription(req, res) {
         error: "Unauthorized access.",
       });
     }
+
+    const user = await User.findById(prescription.patient);
+    user.medicalHistory = user.medicalHistory.filter(
+      (history) => history !== prescription._id
+    );
+    await user.save();
 
     await Prescription.findByIdAndDelete(id);
 

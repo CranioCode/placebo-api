@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   dob: Number,
-  medicalHistory: [mongoose.Schema.Types.ObjectId],
+  medicalHistory: [mongoose.Schema.Types.ObjectId], // Past prescriptions
   phoneNumber: Number,
   address: String,
   profilePic: String,
